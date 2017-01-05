@@ -64,3 +64,14 @@ def sim_peason(prefs, person1, person2):
     r = num/den
 
     return r
+
+# 선호도 딕셔너리에서 최적의 상대편들을 구함
+# 결과 개수와 유사도 함수는 옵션 사항임
+def topMatches(prefs, person, n=5, similarity=sim_peason):
+    scores=[(similarity(prefs, person, other), other)
+                for other in prefs if other != person]
+
+    # 최고점이 상단에 오도록 목록을 정렬
+    scores.sort()
+    scores.reverse()
+    return scores[0:n]
