@@ -77,8 +77,8 @@ def topMatches(prefs, person, n=5, similarity=sim_peason):
     return scores[0:n]
 
 # 영화 추천
-# 다른 사람과의 순위의 가중평균값을 이요하여 특정 사람에게 추천
-def getREcommendations(prefs, person, similarity=sim_peason):
+# 다른 사람과의 순위의 가중평균값을 이용하여 특정 사람에게 추천
+def getRecommendations(prefs, person, similarity=sim_peason):
     totals={}
     simSums={}
     for other in prefs:
@@ -107,10 +107,23 @@ def getREcommendations(prefs, person, similarity=sim_peason):
     rankings.reverse()
     return rankings
 
+# 선호도 데이터 변경
+def transformPrefs(prefs):
+    result={}
+    for person in prefs:
+        for item in prefs[person]:
+            result.setdefault(item,{})
+
+            # 영화와 사람을 교체
+            result[item][person] = prefs[person][item]
+    return result
+
 if __name__ == "__main__":
-    l1 = getREcommendations(critics, 'Toby')
-    l2 = getREcommendations(critics, 'Toby', similarity=sim_distance)
-    for i in l1:
+    movies = transformPrefs(critics)
+    l = topMatches(movies, 'Superman Returns')
+
+    for i in l:
         print(i)
-    for i in l2:
-        print(i)
+
+    print(getRecommendations(movies, 'Just My Luck'))
+
