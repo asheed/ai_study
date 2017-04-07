@@ -151,4 +151,4 @@ if __name__ == "__main__":
 	print("######################")
 	print()
 
-	print(most_common_interests_with(0))
+	print("user0과 관심사가 유사한 사람들 : ", most_common_interests_with(users[0]["id"]))
